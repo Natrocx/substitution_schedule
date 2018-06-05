@@ -65,10 +65,10 @@ public class MainActivity extends AppCompatActivity {
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
 
-            NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, NotificationChannel.DEFAULT_CHANNEL_ID)
+            NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, "BTR")
                     .setSmallIcon(R.drawable.ic_event_note)
-                    .setContentTitle("Test")
-                    .setContentText("Test")
+                    .setContentTitle("Test title")
+                    .setContentText("This is a test notification.")
                     .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                     .setContentIntent(pendingIntent)
                     .setAutoCancel(true);
@@ -77,7 +77,6 @@ public class MainActivity extends AppCompatActivity {
             NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
             notificationManager.notify(notificationId, mBuilder.build());
         }
-
     }
 
     @Override
