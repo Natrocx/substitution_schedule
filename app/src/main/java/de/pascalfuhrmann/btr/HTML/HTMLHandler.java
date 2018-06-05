@@ -134,17 +134,17 @@ public class HTMLHandler {
          * it will then be converted to char and appended to a string.
          */
         if(receivePOSTAnswer) {
-            String postAnswer = "";
+            StringBuilder postAnswer = new StringBuilder();
             BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
             try {
                 for(int c = in.read(); c != -1; c = in.read()) {
                     //System.out.print((char)c);
-                    postAnswer += (char)c;
+                    postAnswer.append((char)c);
                 }
             } finally {
                 in.close();
             }
-            return postAnswer;
+            return postAnswer.toString();
         }
         return "";
     }
