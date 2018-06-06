@@ -1,16 +1,13 @@
-package de.pascalfuhrmann.btr.Activitys;
+package de.pascalfuhrmann.btr.activitys;
 
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
+import android.app.job.JobInfo;
+import android.app.job.JobScheduler;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -21,16 +18,20 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import java.util.HashMap;
 import java.util.List;
-import de.pascalfuhrmann.btr.HTML.HTMLParser;
+
+import de.pascalfuhrmann.btr.html.HTMLParser;
 import de.pascalfuhrmann.btr.R;
+import de.pascalfuhrmann.btr.broadcast_receivers.JobSchedulerService;
 
 public class MainActivity extends AppCompatActivity {
+    public String htmlContent;
     private ListView mListView;
     private HTMLParser parser;
     private EditText mEditText;
-    public String htmlContent;
     private StableArrayAdapter adapter;
     private List<String> htmlTableContent;
 
@@ -54,29 +55,20 @@ public class MainActivity extends AppCompatActivity {
 
         SharedPreferences settings = getSharedPreferences(SettingsActivity.SETTINGS, MODE_PRIVATE);
 
-        SharedPreferences.Editor editor = settings.edit();
-        editor.putString("schoolClass", "DI71");
-        editor.putBoolean("notifications", true);
-        editor.putBoolean("storeUserData", true);
-        editor.apply();
-
         if (settings.getBoolean("notifications", true)) {
-            Intent intent = new Intent(this, MainActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
-
-            NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, "BTR")
-                    .setSmallIcon(R.drawable.ic_event_note)
-                    .setContentTitle("Test title")
-                    .setContentText("This is a test notification.")
-                    .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                    .setContentIntent(pendingIntent)
-                    .setAutoCancel(true);
-
-            int notificationId = 1;
-            NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
-            notificationManager.notify(notificationId, mBuilder.build());
+            createNotificationService(this);
         }
+    }
+
+    private void createNotificationService(Context context) {
+        ComponentName componentName = new ComponentName(getApplicationContext(), JobSchedulerService.class);
+        JobScheduler mJobScheduler = (JobScheduler) context.getSystemService(Context.JOB_SCHEDULER_SERVICE);
+        JobInfo.Builder builder = new JobInfo.Builder(1, componentName)
+                .setPeriodic(15000) //triggers the job all 15s
+                .setPersisted(true) //recreates the job after it is done
+                .setRequiredNetworkType(JobInfo.NETWORK_TYPE_UNMETERED); //requires non-cellular network
+        if (mJobScheduler != null)
+            mJobScheduler.schedule(builder.build());
     }
 
     @Override
@@ -87,17 +79,17 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch(item.getItemId()) {
+        switch (item.getItemId()) {
             case R.id.settings:
                 Intent intent = new Intent(this, SettingsActivity.class);
                 intent.addCategory(Intent.CATEGORY_ALTERNATIVE);
                 startActivity(intent);
                 return true;
             case R.id.about:
-                Snackbar snackbar = Snackbar.make(findViewById(R.id.main_activity),
-                                                "made by Pascal Fuhrmann",
-                                                    Snackbar.LENGTH_LONG);
-                snackbar.show();
+                Toast toast = Toast.makeText(this,
+                        "made by Pascal in coop. with Jonas",
+                        Toast.LENGTH_LONG);
+                toast.show();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -113,8 +105,8 @@ public class MainActivity extends AppCompatActivity {
         public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 //close keyboard
-                InputMethodManager imm = (InputMethodManager)v.getContext().
-                                          getSystemService(Context.INPUT_METHOD_SERVICE);
+                InputMethodManager imm = (InputMethodManager) v.getContext().
+                        getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
 
                 /**
@@ -124,11 +116,11 @@ public class MainActivity extends AppCompatActivity {
                  */
                 if (!mEditText.getText().toString().isEmpty()) {
                     htmlTableContent = MainActivity.this.parser.
-                                       searchSort(mEditText.getText().toString());
-                    if(htmlTableContent.get(0).contains("No search")) {
+                            searchSort(mEditText.getText().toString());
+                    if (htmlTableContent.get(0).contains("No search")) {
                         Snackbar errorMessage = Snackbar.make(findViewById(R.id.main_activity),
-                                                            "No search results found.",
-                                                                Snackbar.LENGTH_LONG);
+                                "No search results found.",
+                                Snackbar.LENGTH_LONG);
                         errorMessage.show();
                     } else {
                         updateAdapter(htmlTableContent);
@@ -144,6 +136,7 @@ public class MainActivity extends AppCompatActivity {
 
         /**
          * Set's a new list as the adapters content and updates it.
+         *
          * @param html
          */
         private void updateAdapter(List<String> html) {
@@ -177,5 +170,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
+
 }
 

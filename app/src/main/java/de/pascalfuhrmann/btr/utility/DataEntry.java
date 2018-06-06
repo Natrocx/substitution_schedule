@@ -1,4 +1,4 @@
-package de.pascalfuhrmann.btr.Utility;
+package de.pascalfuhrmann.btr.utility;
 import org.jsoup.select.Elements;
 
 public class DataEntry {

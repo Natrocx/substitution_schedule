@@ -1,4 +1,4 @@
-package de.pascalfuhrmann.btr.Activitys;
+package de.pascalfuhrmann.btr.activitys;
 
 import android.content.Context;
 import android.content.SharedPreferences;

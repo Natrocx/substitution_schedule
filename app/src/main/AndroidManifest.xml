@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="de.pascalfuhrmann.btr">
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+
 
     <application
         android:allowBackup="true"
@@ -10,8 +12,10 @@
         android:roundIcon="@drawable/ic_event_note"
         android:supportsRtl="true"
         android:theme="@style/BTRTheme">
+        <service android:name=".broadcast_receivers.JobSchedulerService"
+            android:permission="android.permission.BIND_JOB_SERVICE"/>
         <activity
-            android:name=".Activitys.LoginActivity"
+            android:name=".activitys.LoginActivity"
             android:label="@string/login_activity"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -21,11 +25,11 @@
         </activity>
         <activity
             android:launchMode="singleTop"
-            android:name=".Activitys.MainActivity"
+            android:name=".activitys.MainActivity"
             android:label="@string/main_activity"
             android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".Activitys.SettingsActivity"
+        <activity android:name=".activitys.SettingsActivity"
             android:label="@string/settings_activity"
             android:screenOrientation="portrait">
         </activity>

@@ -1,5 +1,4 @@
-package de.pascalfuhrmann.btr.HTML;
-import android.support.annotation.NonNull;
+package de.pascalfuhrmann.btr.html;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -10,14 +9,12 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 
 
-import de.pascalfuhrmann.btr.Utility.DataEntry;
+import de.pascalfuhrmann.btr.utility.DataEntry;
 
 /**
  * Responsible for the parsing of HTML information into a readable format.

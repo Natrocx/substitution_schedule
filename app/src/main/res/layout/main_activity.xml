@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center_horizontal"
-    tools:context=".Activitys.MainActivity"
+    tools:context=".activitys.MainActivity"
     android:id="@+id/main_activity">
 
     <EditText

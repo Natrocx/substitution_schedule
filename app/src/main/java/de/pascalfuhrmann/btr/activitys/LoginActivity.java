@@ -1,4 +1,4 @@
-package de.pascalfuhrmann.btr.Activitys;
+package de.pascalfuhrmann.btr.activitys;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -20,7 +20,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import de.pascalfuhrmann.btr.HTML.HTMLHandler;
+import de.pascalfuhrmann.btr.html.HTMLHandler;
 import de.pascalfuhrmann.btr.R;
 
 /**
