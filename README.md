@@ -9,3 +9,7 @@ Special thanks to [Jonas Lauschke](https://github.com/natrocx) who greatly impro
 # Preview
 
 ![MainActivity](https://i.imgur.com/aTIsc5x.png)
+
+# Download
+
+APK: [btr_2018_06_10_v1_6_dbg.apk](https://drive.google.com/open?id=1y78WTJcPMjJMjZinhLyFlDvftqpZyUXP)
