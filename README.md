@@ -8,5 +8,4 @@ Special thanks to [Jonas Lauschke](https://github.com/natrocx) who greatly impro
 
 # Preview
 
-MainActivity:
 ![MainActivity](https://i.imgur.com/aTIsc5x.png)
