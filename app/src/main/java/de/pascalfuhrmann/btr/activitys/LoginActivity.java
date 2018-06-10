@@ -1,3 +1,21 @@
+/* Copyright 2018 Pascal Fuhrmann, Jonas Lauschke
+
+    This file is part of substitution_schedule.
+
+    substitution_schedule is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    substitution_schedule is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with substitution_schedule.  If not, see <http://www.gnu.org/licenses/>.
+  */
+
 package de.pascalfuhrmann.btr.activitys;
 
 import android.animation.Animator;
@@ -42,6 +60,7 @@ public class LoginActivity extends AppCompatActivity {
     /**
      * Creates the GUI for the login as well as handling the events of the created
      * views and the button.
+     *
      * @param savedInstanceState
      */
     @Override
@@ -78,6 +97,7 @@ public class LoginActivity extends AppCompatActivity {
     /**
      * Launches the UserLoginTask which handles the whole login
      * and opens the MainActivity if everything succeeded.
+     *
      * @see MainActivity
      * @see UserLoginTask
      */
@@ -133,6 +153,7 @@ public class LoginActivity extends AppCompatActivity {
 
     /**
      * Checks whether the password is valid or not.
+     *
      * @param password
      * @return
      */
@@ -181,7 +202,7 @@ public class LoginActivity extends AppCompatActivity {
      * Represents an asynchronous login/registration task used to authenticate
      * the user.
      */
-    private class UserLoginTask extends AsyncTask<Void, Void, Boolean>  {
+    private class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
         private final String mUser;
         private final String mPassword;
         private Bundle htmlBundle;
@@ -196,6 +217,7 @@ public class LoginActivity extends AppCompatActivity {
         /**
          * Launches the HTMLHandler which does handle the whole login process
          * as well as making sure it receives HTML content to get parsed.
+         *
          * @param params
          * @return
          */
@@ -208,7 +230,7 @@ public class LoginActivity extends AppCompatActivity {
             boolean loginSuccess = handler.processLogin();
             htmlContent = handler.getHtmlContent();
 
-            if(loginSuccess) {
+            if (loginSuccess) {
                 return loginSuccess;
             } else {
                 return false;
@@ -220,6 +242,7 @@ public class LoginActivity extends AppCompatActivity {
          * will be checked for any errors the either the user will be
          * prompted to login again or the MainActivity is being opened with
          * the htmlContent.
+         *
          * @param success
          */
         @Override
@@ -233,7 +256,7 @@ public class LoginActivity extends AppCompatActivity {
              */
             if (success) {
                 //close keyboard
-                InputMethodManager imm = (InputMethodManager)LoginActivity.this.getSystemService(Context.INPUT_METHOD_SERVICE);
+                InputMethodManager imm = (InputMethodManager) LoginActivity.this.getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(mUsernameView.getWindowToken(), 0);
 
                 //Create a bundle with the htmlContent that was returned by the login.
@@ -248,7 +271,7 @@ public class LoginActivity extends AppCompatActivity {
                 finish();
             } else {
                 //close keyboard
-                InputMethodManager imm = (InputMethodManager)LoginActivity.this.getSystemService(Context.INPUT_METHOD_SERVICE);
+                InputMethodManager imm = (InputMethodManager) LoginActivity.this.getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(mUsernameView.getWindowToken(), 0);
 
                 //set error at the username input field and focus it
